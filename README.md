@@ -18,12 +18,17 @@ Basic structure for starting a Flask project with Jinja templates
 
 5. Run the project with command: ```python app.py```
 
-###Run the projec (subsequent times)
+### Run the projec (subsequent times)
 
 1. Activate virtual environment (if not already activated)
 
 2. Run the project with ```python app.py```
 
-###Github instructions
+### Github instructions
 
-Always push to your own branch
+1. Work always on your own branch.
+
+2. After finishing work on your branch, ask for review (via wassap for example).
+
+3. After your branch has been reviewed you can merge into the main branch.
+
