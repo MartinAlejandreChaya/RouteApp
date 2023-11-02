@@ -24,3 +24,6 @@ Basic structure for starting a Flask project with Jinja templates
 
 2. Run the project with ```python app.py```
 
+###Github instructions
+
+Always push to your own branch
