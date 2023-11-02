@@ -1,0 +1,25 @@
+:root {
+  --primary-text-col: black;
+  --secondary-text-col: #616161;
+  --highlight-text-col: #646fe8;
+
+  --bg-yellow: #FFEB3B;
+}
+
+body {
+    margin:0px;
+    font-family: arial;
+}
+
+
+.title {
+    color: var(--primary-text-col);
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.subtitle {
+    color: var(--secondary-text-col);
+    font-size: 1em;
+    font-weight: normal;
+}

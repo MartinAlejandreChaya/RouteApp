@@ -1,0 +1,23 @@
+
+.result_options {
+
+}
+
+.result_options ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    padding-left: 50px;
+}
+
+.result_options ul li {
+    padding: 0 5px;
+    margin-right: 10px;
+}
+.result_options ul li:hover {
+    color: var(--highlight-text-col);
+}
+
+.result_options ul li i {
+    padding-right: 4px;
+}

@@ -1,6 +1,38 @@
 {% extends 'base.html' %}
 
-{% block title %} Welcome to the home page {% endblock %}
+{% block title %} Home {% endblock %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/results.css') }}">
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}
 
 
-{% block body %} Hello world! {% endblock %}
+{% block body %}
+
+<div>
+    <div class="search_bar">
+        <div class="input_border">
+            <i class="fa fa-search icon"></i>
+            <input class="title_input" id="search_input" type="text" />
+        </div>
+    </div>
+
+
+    <div class="results">
+        <div class="result_options">
+            <ul>
+                <li><i class="fa fa-solid fa-filter icon"></i>Filter</li>
+                <li><i class="fa fa-solid fa-sort icon"></i>Sort</li>
+            </ul>
+        </div>
+
+        <div class="result_list">
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
