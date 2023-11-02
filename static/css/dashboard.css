@@ -1,0 +1,28 @@
+
+
+.search_bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    padding: 20px 0 20px 0;
+    background: var(--bg-yellow);
+}
+
+.search_bar .title_input {
+    border: none;
+}
+.search_bar .title_input:focus {
+    outline: none;
+}
+.search_bar .input_border:focus-within {
+    box-shadow: 1px 1px 1px black;
+}
+
+.search_bar .input_border {
+    border: solid 1px var(--primary-text-col);
+    background: white;
+    border-radius: 3px;
+    padding: 2px 2px 2px 5px;
+}
+
