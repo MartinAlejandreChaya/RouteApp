@@ -3,15 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %} {% endblock%}</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stylesheet.css') }}">
+    <title>RouteApp | {% block title %} {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/header.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% block header %} {% endblock %}
 </head>
 <body>
     <div>
-        <h1>Welcome to Software Design</h1>
-        <hr>
-        <br>
-        
+        <header>
+            <h1 class="title">RouteApp</h1>
+            <h2 class="subtitle">Your mountain trecking solution</h2>
+            <nav>
+                <ul>
+                    <li>
+                        Item 1
+                    </li>
+                    <li>
+                        Item 2
+                    </li>
+                    <li>
+                        Item 3
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
         {% block body %}
 
         {% endblock %}
