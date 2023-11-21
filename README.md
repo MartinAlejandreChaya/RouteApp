@@ -6,15 +6,17 @@ Basic structure for starting a Flask project with Jinja templates
 #### Backend
 
 - [ ] Scrappers
-   - [ ] Route scrapper (Wikiloc) 
+   - [ ] Route scrapper (Wikiloc) @Guille
    
 - [ ] Api
-   - [ ] Clima (Aemet)
-   - [ ] Tráfico (Google Maps)
+   - [ ] Clima (Aemet) @Mar/@Laura
+   - [ ] Tráfico (Google Maps) @Martin
 
 - [ ] ETL Datawarehouse
-   - [ ] Script de actualización (Airbnb)
-   - [ ] Base de datos (Mongo)
+   - [ ] Script de actualización (Airbnb) @Gabriel
+   - [ ] Base de datos (Mongo) @Gabriel
+
+- [ ] Integración de todo en el servidor @Martin
 
 #### Frontend
 
