@@ -3,6 +3,10 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import lxml
 import re
+from selenium import webdriver
+from selenium.webdriver.edge.options import Options
+from selenium.webdriver.edge.service import Service
+
 
 class ruta:
     nombre = ""
@@ -34,7 +38,7 @@ class ruta:
 
 
 
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36'}
+headers = {'User-Agent': 'AppleWebKit/537.36 (KHTML, like Gecko)'}
 
 URL="https://es.wikiloc.com/rutas-senderismo/torres-del-paine-refugio-paine-grande-a-refugio-grey-y-mirador-grey-y-vuelta-32629180"
 def info(URL):
@@ -79,10 +83,12 @@ def info(URL):
 
     try:
         b=soup.find("img", class_="d-item-star")
+        #print(b)
         c=b.parent
-    except AttributeError as e:
+        #print(c.text)
+    except AttributeError:
         pass
-        #print("no hay estrellas:",e)
+        #print("no hay estrellas")
     else:
         ruta1.Estrellas=c.text.replace("\xa0"," ")
 
@@ -111,6 +117,30 @@ def info(URL):
     print(ruta1.mostrar())
     return(ruta1)
 
-ruta2=info(URL)
+#ruta2=info(URL)
 #print(ruta2.mostrar())
 
+
+coords=[40.881380,-5.819879,41.138000,-5.367608]
+print(coords)
+URL2="https://es.wikiloc.com/wikiloc/map.do?sw="+str(coords[0])+'%2C'+str(coords[1])+'&ne='+str(coords[2])+'%2C'+str(coords[3])
+print(URL2)
+options = Options()
+options.add_argument("--headless=new")
+
+driver = webdriver.Edge(options=options)
+driver.get(URL2)
+html = driver.page_source
+
+
+soup2 = BeautifulSoup(html, 'lxml')
+
+#soup2 = BeautifulSoup(r.text, 'lxml')
+
+
+
+hrefs = [div.find("a").get("href") for div in soup2.find_all("div", class_="trail-card__title-wrapper")]
+print(hrefs)
+for i in range(0,min(len(hrefs),30)):
+    URL='https://es.wikiloc.com/'+hrefs[i]
+    ruta2=info(URL)
