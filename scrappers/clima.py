@@ -6,5 +6,7 @@ def get_clima(loc):
     print(loc)
 
     print("Laura es la mejor")
-    
+
+    # Esto es un commentario
+
     return {"success": False, "climate": {}}
