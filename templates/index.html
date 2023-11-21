@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/results.css') }}">
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/route_renders.js') }}"></script>
 {% endblock %}
 
 
@@ -28,10 +29,21 @@
             </ul>
         </div>
 
-        <div class="result_list">
-
+        <div id="result_list">
+            <p>Introduce un sitio que te gustaría explorar en la barra de búsqueda.</p>
         </div>
 
+    </div>
+
+    <!-- Ventana modal, por defecto no visiblel -->
+    <div id="ventanaModal" class="modal">
+        <div class="modal-content">
+            <span id="cerrar">&times;</span>
+            <div id="modal_route_div">
+                <h2>Ventana modal</h2>
+                <p>Esto es el texto de la ventana</p>
+            </div>
+        </div>
     </div>
 </div>
 

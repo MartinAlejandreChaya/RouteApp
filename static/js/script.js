@@ -2,21 +2,44 @@ const SEARCH_INPUT_EXAMPLES = [
     "Sierra Nevada", "Pirineos", "Navacerrada"
 ]
 
+let waiting_for_response = false;
+
+// MODAL
+let modal;
+let cerrar_modal;
+
 window.onload = () => {
-
-
+     // Modal
+    modal = document.getElementById("ventanaModal");
+    cerrar_modal = document.getElementById("cerrar")
+    cerrar_modal.addEventListener("click", (event) => {
+        modal.style.display = "none";
+    })
     // Listen to search event
     const search_input = document.getElementById("search_input");
     search_input.addEventListener("keyup", function(event) {
         if (event.key === "Enter") {
+            if (waiting_for_response) {
+                alert("Ya se está procesando una solicitud");
+            }
             const req_data = {"search_title": search_input.value};
             console.log("Sending GET request for data: ", req_data)
+            waiting_for_response = true;
+            loading_routes();
             fetch("/search_routes", {
                 "method": "POST",
                 "headers": {"Content-Type": "application/json"},
                 "body": JSON.stringify(req_data),
             }).then( response => response.json() ).then(data => {
-                console.log("Response recieved", data)
+                console.log("Response recieved", data);
+                waiting_for_response = false;
+
+                if (data.success) {
+                    show_routes(data.routes);
+                }
+                else {
+                    show_error();
+                }
             });
         }
     });
@@ -24,6 +47,11 @@ window.onload = () => {
     animate_placeholder_input(search_input, SEARCH_INPUT_EXAMPLES);
 }
 
+window.addEventListener("click", function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+});
 
 
 // Animate input function
@@ -54,3 +82,44 @@ function animate_placeholder_input(input, examples) {
         }
     }, 50);
 }
+
+
+function loading_routes() {
+    const cont = document.getElementById("result_list");
+    cont.innerHTML = "";
+
+    const message = document.createElement("p");
+    message.innerHTML = "Loading ...";
+
+    cont.appendChild(message);
+}
+
+function show_error() {
+    const cont = document.getElementById("result_list");
+    cont.innerHTML = "";
+
+    const message = document.createElement("p");
+    message.innerHTML = "Error al intentar obtener los datos del servidor";
+    cont.appendChild(message);
+}
+
+function show_routes(routes) {
+    const cont = document.getElementById("result_list");
+    cont.innerHTML = "";
+
+    const grid = document.createElement("ul");
+    grid.classList.add("result_grid")
+
+    routes.forEach((route) => {
+        const li = createRouteLi(route);
+        grid.append(li);
+        li.addEventListener("click", (event) => {
+            // Show modal window with route data
+            createRouteItem(route);
+            modal.style.display = "block";
+        })
+    })
+
+    cont.appendChild(grid);
+}
+
