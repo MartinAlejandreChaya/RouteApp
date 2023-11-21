@@ -1,6 +1,30 @@
 # Flask Template
 Basic structure for starting a Flask project with Jinja templates
 
+## TODOs
+
+#### Backend
+
+- [ ] Scrappers
+   - [ ] Route scrapper (Wikiloc) @Guille
+   
+- [ ] Api
+   - [ ] Clima (Aemet) @Mar/@Laura
+   - [ ] Tráfico (Google Maps) @Martin
+
+- [ ] ETL Datawarehouse
+   - [ ] Script de actualización (Airbnb) @Gabriel
+   - [ ] Base de datos (Mongo) @Gabriel
+
+- [ ] Integración de todo en el servidor @Martin
+
+#### Frontend
+
+- [ ] Route List Item (createRouteLi de route_renders.js)
+- [ ] Route Item (createRouteItem de route_renders.js)
+- [ ] Funcionalidades de Ordenar y Filtrar
+
+
 ---
 ### Setup the project for the first time
 
