@@ -15,14 +15,62 @@ window.onload = () => {
     cerrar_modal.addEventListener("click", (event) => {
         modal.style.display = "none";
     })
+
+    // Date
+    const date_input = document.getElementById("date_input");
+    date_input.valueAsDate = new Date();
+
+    // Location
+    const location_input = document.getElementById("location_input");
+    let location_coords = false;
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            location_input.placeholder = "Localized!";
+            location_coords = {
+                "lat": position.coords.latitude,
+                "long": position.coords.longitude
+            }
+        }, (err) => {
+            location_input.placeholder = "Introduce location";
+        });
+    }
+    else {
+        location_input.placeholder = "Introduce location";
+    }
+
+
     // Listen to search event
     const search_input = document.getElementById("search_input");
     search_input.addEventListener("keyup", function(event) {
         if (event.key === "Enter") {
             if (waiting_for_response) {
                 alert("Ya se está procesando una solicitud");
+                return;
             }
-            const req_data = {"search_title": search_input.value};
+
+            // PARAMS
+            let req_data = {"search_title": search_input.value};
+            if (search_input.value == "") {
+                alert("Introduce algo en la barra de busquedas");
+                return;
+            }
+            req_data["route_date"] = date_input.value;
+            if (location_input.value == "") {
+                if (location_coords) {
+                    req_data["from_loc"] = {
+                        "geolocated": true,
+                        "location_coords": location_coords
+                    };
+                }
+            }
+            else {
+                req_data["from_loc"] = {
+                    "geolocated": false,
+                    "location_title": location_input.value
+                }
+            }
+
             console.log("Sending GET request for data: ", req_data)
             waiting_for_response = true;
             loading_routes();
@@ -38,7 +86,7 @@ window.onload = () => {
                     show_routes(data.routes);
                 }
                 else {
-                    show_error();
+                    show_error(data.error_msg);
                 }
             });
         }
@@ -94,12 +142,12 @@ function loading_routes() {
     cont.appendChild(message);
 }
 
-function show_error() {
+function show_error(error_msg) {
     const cont = document.getElementById("result_list");
     cont.innerHTML = "";
 
     const message = document.createElement("p");
-    message.innerHTML = "Error al intentar obtener los datos del servidor";
+    message.innerHTML = "Error al intentar obtener los datos del servidor: " + error_msg;
     cont.appendChild(message);
 }
 
