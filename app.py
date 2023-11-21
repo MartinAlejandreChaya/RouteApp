@@ -12,8 +12,32 @@ def index():
 def search():
     search_title = request.get_json()["search_title"]
 
+    routes = [
+            {
+                "titulo": search_title,
+                "dificultad": "hard",
+                "longitud": "20km",
+                "clima": "soleado",
+                "tiempo_transporte": "3h30m"
+            },
+            {
+                "titulo": search_title + " test",
+                "dificultad": "fácil",
+                "longitud": "5km",
+                "clima": "nublado",
+                "tiempo_transporte": "1h20m"
+            },
+            {
+                "titulo": search_title + " test2",
+                "dificultad": "fácil",
+                "longitud": "5km",
+                "clima": "nublado",
+                "tiempo_transporte": "1h20m"
+            }
+        ]
     return jsonify({
-        "res": "Server response from page " + search_title
+        "success": True,
+        "routes": routes
     })
 
 
