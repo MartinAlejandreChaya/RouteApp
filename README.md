@@ -9,7 +9,7 @@ Basic structure for starting a Flask project with Jinja templates
    - [ ] Route scrapper (Wikiloc) 
    
 - [ ] Api
-   - [ ] Clima (Aemet) Tarea para laura
+   - [ ] Clima (Aemet)
    - [ ] Tráfico (Google Maps)
 
 - [ ] ETL Datawarehouse
@@ -18,9 +18,9 @@ Basic structure for starting a Flask project with Jinja templates
 
 #### Frontend
 
-[ ] Route List Item (createRouteLi de route_renders.js)
-[ ] Route Item (createRouteItem de route_renders.js)
-[ ] Funcionalidades de Ordenar y Filtrar
+- [ ] Route List Item (createRouteLi de route_renders.js)
+- [ ] Route Item (createRouteItem de route_renders.js)
+- [ ] Funcionalidades de Ordenar y Filtrar
 
 
 ---
