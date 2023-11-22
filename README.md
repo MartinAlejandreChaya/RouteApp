@@ -35,7 +35,9 @@ Basic structure for starting a Flask project with Jinja templates
     - Mac:  ```python3 -m venv ./venv```
 
 3. Activate the new virtual environment
-   - Windows:  ```.\venv\Scripts\activate```
+   - Windows:
+      - Require permission to activate: ```Set-ExecutionPolicy RemoteSigned -Scope CurrentUser```
+      -  Run activate script: ```.\venv\Scripts\activate```
    - Mac:  ```source ./venv/bin/activate```
 
 4. Install the dependencies ```pip install -r requirements.txt```
