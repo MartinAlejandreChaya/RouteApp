@@ -41,6 +41,7 @@ def get_dir(loc, gmaps):
         "address": res
     }
 
+
 def get_traffic(from_loc, to_loc, gmaps):
 
     # Call google API
