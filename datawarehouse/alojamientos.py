@@ -4,3 +4,10 @@
 def actualizar_datawarehouse():
 
     return True
+
+def get_alojamientos(loc):
+
+    return {
+        "success": False,
+        "error_msg": "Get alojamientos not implemented"
+    }

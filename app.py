@@ -9,9 +9,12 @@ def index():
     return render_template('index.html')
 
 
-from scrappers.routes import get_routes, get_coordinates
+from scrappers.routes import get_routes
 from scrappers.clima import get_clima
-from scrappers.trafico import get_traffic
+from scrappers.trafico import get_traffic, get_dir, get_lat_long
+from datawarehouse.alojamientos import get_alojamientos
+
+import googlemaps
 
 @app.route("/search_routes", methods=["GET", "POST"])
 def search():
@@ -22,17 +25,45 @@ def search():
     route_date = date.today()
     if ("route_date" in params.keys()):
         route_date = params["route_date"]
+
     # from loc
-    from_loc = False
+    from_loc = {
+        "exists": False,
+        "error_msg": "Introduce ubicacion en busqueda"
+    }
     if ("from_loc" in params.keys()):
+        gmaps = googlemaps.Client(key='AIzaSyBxkPLTw1AgCBl6wkOP9wu0_xaumdy7Kcc')
         from_loc = params["from_loc"]
         if (from_loc["geolocated"]):
-            from_loc = from_loc["location_coords"]
+            # We have coordinates in Lat, Long format
+            loc_lat_long = from_loc["location_coords"]
+            res = get_dir(loc_lat_long, gmaps)
+            if (not res["success"]):
+                from_loc = {
+                    "exists": False,
+                    "error_msg": res["error_msg"]
+                }
+            else:
+                from_loc = {
+                    "exists": True,
+                    "loc": loc_lat_long,
+                    "address": res["address"]
+                }
+
         else:
-            from_loc_res = get_coordinates(from_loc["location_title"])
-            if (not from_loc_res["success"]):
-                return jsonify({"success": False, "error_msg": from_loc_res["error_msg"]})
-            from_loc = from_loc_res["coords"]
+            loc_address = from_loc["location_title"]
+            res = get_lat_long(loc_address, gmaps)
+            if (not res["success"]):
+                from_loc = {
+                    "exists": False,
+                    "error_msg": res["error_msg"]
+                }
+            else:
+                from_loc = {
+                    "exists": True,
+                    "loc": res["loc"],
+                    "address": loc_address
+                }
 
     print("Parameters:")
     print("\tPlace:", search_title)
@@ -44,7 +75,7 @@ def search():
     routes_res = get_routes(search_title)
     if (not routes_res["success"]):
         return jsonify({"success": False, "error_msg": routes_res["error_msg"]})
-    routes = routes_res["routes_data"]
+    routes = routes_res["data"]
 
 
     # Get climate in route
@@ -56,7 +87,7 @@ def search():
             route["clima"] = False
             route["clima_error"] = clima_res["error_msg"]
         else:
-            route["clima"] = clima_res["clima_data"]
+            route["clima"] = clima_res["data"]
 
 
     # Get traffic in route
@@ -68,7 +99,21 @@ def search():
             route["traffic"] = False
             route["traffic_error"] = traffic_res["error_msg"]
         else:
-            route["traffic"] = traffic_res["route_data"]
+            route["traffic"] = traffic_res["data"]
+
+
+    # Get acomodation in route
+    for route in routes:
+
+        alojamientos_res = get_alojamientos(route["location"])
+
+        if (not alojamientos_res["success"]):
+            route["alojamientos"] = False
+            route["alojamientos_error"] = alojamientos_res["error_msg"]
+        else:
+            route["alojamientos"] = alojamientos_res["data"]
+
+
 
 
 
