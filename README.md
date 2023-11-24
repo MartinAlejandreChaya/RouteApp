@@ -1,9 +1,39 @@
 # Flask Template
 Basic structure for starting a Flask project with Jinja templates
 
-## TODOs
+## Notas para todos
 
-#### Backend
+#### Interfaz de funciones
+
+Para poder conectar todos los servicios desde el backend (es decir, recuperar las rutas, la información de clima para cada una de ellas, tráfico, ...) necesito que los objetos que devuelvan vuestras funciones sean consistentes. Por ello, la estructura que vamos a seguir es esta
+
+```python
+return {
+   "success": True / False,
+   "error_msg": "Mensaje de error si success == False",
+   "data": {"Objeto que contenga los datos si success == True"}
+}
+```
+
+Así yo podré hacer algo así:
+
+```python
+res = get_clima("navacerrada")
+if (not res["success"]):
+   # Devolver error al frontend
+   return {"success": False, "error_msg": res["error_msg"]}
+
+clima_data = res["data"]
+# Continuar con ejecución normal del programa
+```
+
+*Por cierto, poner los mensajes de error en español*.
+
+#### Deadlines
+
+En Aula Global pone que el deadline es en 15 días (10 Diciembre). Por tanto, vamos a necesitar que vuestras funciones estén como tarde el **1 de Diciembre**. Tener en cuenta que también hay que entregar una memoria PDF y también hay que hacer la parte de Blockchain. La parte de Blockchain no sé cuando es el deadline, pero será parecido. El próximo día que quedemos vemos qué vamos a hacer para esa parte y cómo dividirnos un poco el trabajo, yo ya tengo alguna idea.
+
+## Backend
 
 - [ ] Scrappers
    - [ ] Route scrapper (Wikiloc) @Guille
@@ -15,6 +45,7 @@ Basic structure for starting a Flask project with Jinja templates
 - [ ] ETL Datawarehouse
    - [ ] Script de actualización (Airbnb) @Gabriel
    - [ ] Base de datos (Mongo) @Gabriel
+   - [ ] Función que devuelva alojamientos cerca de una localización @Gabriel
 
 - [ ] Integración de todo en el servidor @Martin
 
