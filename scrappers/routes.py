@@ -3,9 +3,10 @@
 # Returns: {"sucess": True/False, "routes": route_list}
 def get_routes(loc):
 
-    # Call google API
 
     return {
         "success": False,
-        "routes": []
+        "error_msg": "Searching routes by title not implemented"
     }
+
+

@@ -1,13 +1,23 @@
 
-.result_options {
+.results_functionality {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
 
+.result_options {
+    margin-left: 50px;
+}
+
+.extra_params {
+    margin-left: 50px;
 }
 
 .result_options ul {
     list-style-type: none;
     display: flex;
     flex-direction: row;
-    padding-left: 50px;
+    padding: 0px;
 }
 
 .result_options ul li {
