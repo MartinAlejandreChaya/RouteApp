@@ -31,39 +31,10 @@ def search():
         "exists": False,
         "error_msg": "Introduce ubicacion en busqueda"
     }
+    gmaps = googlemaps.Client(key='AIzaSyBxkPLTw1AgCBl6wkOP9wu0_xaumdy7Kcc')
     if ("from_loc" in params.keys()):
-        gmaps = googlemaps.Client(key='AIzaSyBxkPLTw1AgCBl6wkOP9wu0_xaumdy7Kcc')
-        from_loc = params["from_loc"]
-        if (from_loc["geolocated"]):
-            # We have coordinates in Lat, Long format
-            loc_lat_long = from_loc["location_coords"]
-            res = get_dir(loc_lat_long, gmaps)
-            if (not res["success"]):
-                from_loc = {
-                    "exists": False,
-                    "error_msg": res["error_msg"]
-                }
-            else:
-                from_loc = {
-                    "exists": True,
-                    "loc": loc_lat_long,
-                    "address": res["address"]
-                }
+        from_loc = get_from_loc_param(params["from_loc"], gmaps)
 
-        else:
-            loc_address = from_loc["location_title"]
-            res = get_lat_long(loc_address, gmaps)
-            if (not res["success"]):
-                from_loc = {
-                    "exists": False,
-                    "error_msg": res["error_msg"]
-                }
-            else:
-                from_loc = {
-                    "exists": True,
-                    "loc": res["loc"],
-                    "address": loc_address
-                }
 
     print("Parameters:")
     print("\tPlace:", search_title)
@@ -114,14 +85,46 @@ def search():
             route["alojamientos"] = alojamientos_res["data"]
 
 
-
-
-
     return jsonify({
         "success": True,
         "routes": routes
     })
 
+
+
+def get_from_loc_param(from_loc, gmaps):
+
+    if (from_loc["geolocated"]):
+        # We have coordinates in Lat, Long format
+        loc_lat_long = from_loc["location_coords"]
+        res = get_dir(loc_lat_long, gmaps)
+        if (not res["success"]):
+            from_loc = {
+                "exists": False,
+                "error_msg": res["error_msg"]
+            }
+        else:
+            from_loc = {
+                "exists": True,
+                "loc": loc_lat_long,
+                "address": res["address"]
+            }
+
+    else:
+        loc_address = from_loc["location_title"]
+        res = get_lat_long(loc_address, gmaps)
+        if (not res["success"]):
+            from_loc = {
+                "exists": False,
+                "error_msg": res["error_msg"]
+            }
+        else:
+            from_loc = {
+                "exists": True,
+                "loc": res["loc"],
+                "address": loc_address
+            }
+    return from_loc
 
 if __name__ == '__main__':
     app.run(debug=True)
