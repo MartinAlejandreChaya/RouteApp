@@ -6,14 +6,14 @@ import lxml
 import re
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
-
+MAX_ROUTES = 5
 
 # PARAMS: The location around which we want to search for routes. Format (lat, long)
 # RETURNS: A list of routes
-def get_rutas(loc):
+def get_routes(loc):
 
     # Build square
-    coords = [loc[0], loc[1], loc[0] + 0.1, loc[1] + 0.1]
+    coords = [loc["lat"], loc["long"], loc["lat"] + 0.1, loc["long"] + 0.1]
 
     # Get routes close to loc url:
     URL="https://es.wikiloc.com/wikiloc/map.do?sw="+str(coords[0])+'%2C'+str(coords[1])+'&ne='+str(coords[2])+'%2C'+str(coords[3])
@@ -37,7 +37,7 @@ def get_rutas(loc):
         }
 
     rutas = []
-    for i in range(0, min(len(hrefs), 30)):
+    for i in range(0, min(len(hrefs), MAX_ROUTES)):
         ROUTE_URL = 'https://es.wikiloc.com/' + hrefs[i]
         route_info = get_route(ROUTE_URL)
         rutas.append({
@@ -46,7 +46,7 @@ def get_rutas(loc):
 
     return {
         "success": True,
-        "route_data": rutas
+        "data": rutas
     }
 
 
@@ -94,6 +94,10 @@ def get_route(URL):
         estrellas = b.parent.text.replace("\xa0"," ")
     except:
         estrellas = False
+
+    # Convert punto_inicio
+    punto_inicio = punto_inicio.split(",")
+    punto_inicio = {"lat": float(punto_inicio[0]), "long": float(punto_inicio[1])}
 
     return {
         "nombre": nombre,

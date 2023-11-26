@@ -1,3 +1,6 @@
+.results {
+    margin-bottom: 30px;
+}
 
 .results_functionality {
     display: flex;
@@ -11,6 +14,10 @@
 
 .extra_params {
     margin-left: 50px;
+}
+.extra_params span {
+    font-size: 0.8em;
+    color: var(--secondary-text-col);
 }
 
 .result_options ul {
@@ -47,6 +54,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     row-gap: 20px;
+    justify-content: center;
 }
 
 .result_grid li {
@@ -55,7 +63,7 @@
     margin-right: 30px;
     flex-grow: 1;
     border-radius: 3px;
-    /* max-width: 300px; */
+    max-width: 500px;
 }
 
 .result_grid li:hover {

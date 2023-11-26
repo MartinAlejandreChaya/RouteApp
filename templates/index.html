@@ -5,8 +5,10 @@
 {% block header %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/results.css') }}">
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
 <script src="{{ url_for('static', filename='js/route_renders.js') }}"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
 {% endblock %}
 
 
@@ -31,6 +33,7 @@
             </div>
 
             <div class="extra_params">
+                <span>Options</span>
                 <input class="date_input" type="date" id="date_input" />
                 <input class="location_input" type="text" id="location_input"/>
             </div>

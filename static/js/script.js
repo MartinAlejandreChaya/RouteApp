@@ -1,3 +1,4 @@
+
 const SEARCH_INPUT_EXAMPLES = [
     "Sierra Nevada", "Pirineos", "Navacerrada"
 ]

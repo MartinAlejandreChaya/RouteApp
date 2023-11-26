@@ -6,13 +6,16 @@
     justify-content: center;
     flex-wrap: wrap;
 
-    padding: 20px 0 20px 0;
+    padding: 20px 0px 20px 0px;
     background: var(--bg-yellow);
 }
 
 .search_bar .title_input {
     border: none;
+    font-size: 1.2em;
+    width: 300px;
 }
+
 .search_bar .title_input:focus {
     outline: none;
 }

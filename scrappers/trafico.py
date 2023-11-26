@@ -43,11 +43,15 @@ def get_dir(loc, gmaps):
 
 
 def get_traffic(from_loc, to_loc, gmaps):
-
+    if (not from_loc["exists"]):
+        return {
+            "success": False,
+            "error_msg": "Ubicación de partida no válida"
+        }
     # Call google API
 
     return {
         "success": False,
-        "traffic": {}
+        "error_msg": "Get traffic not implemented yet"
     }
 
