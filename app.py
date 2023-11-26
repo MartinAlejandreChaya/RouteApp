@@ -21,6 +21,7 @@ def search():
     # Parameters
     params = request.get_json()
     search_title = params["search_title"]
+
     # route date
     route_date = date.today()
     if ("route_date" in params.keys()):
@@ -32,7 +33,7 @@ def search():
         "error_msg": "Introduce ubicacion en busqueda"
     }
     if ("from_loc" in params.keys()):
-        gmaps = googlemaps.Client(key='AIzaSyBxkPLTw1AgCBl6wkOP9wu0_xaumdy7Kcc')
+
         from_loc = params["from_loc"]
         if (from_loc["geolocated"]):
             # We have coordinates in Lat, Long format
@@ -112,9 +113,6 @@ def search():
             route["alojamientos_error"] = alojamientos_res["error_msg"]
         else:
             route["alojamientos"] = alojamientos_res["data"]
-
-
-
 
 
     return jsonify({

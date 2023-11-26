@@ -9,3 +9,5 @@ typing-extensions==4.1.1
 Werkzeug==2.1.1
 zipp==3.8.0
 googlemaps
+lxml
+selenium
