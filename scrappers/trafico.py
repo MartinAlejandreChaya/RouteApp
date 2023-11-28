@@ -42,16 +42,44 @@ def get_dir(loc, gmaps):
     }
 
 
-def get_traffic(from_loc, to_loc, gmaps):
+def get_traffic(from_loc, to_loc, gmaps, date=False):
     if (not from_loc["exists"]):
+        return {"success": False, "error_msg": "Ubicación de partida no válida"}
+    if (not to_loc):
+        return {"success": False, "error_msg": "No se pudo recuperar el punto de inicio de ruta."}
+
+    if (not date):
+        date = datetime.now()
+
+    # Call google API
+    try:
+        directions_result = gmaps.directions(from_loc["address"],
+                                             to_loc["address"],
+                                             mode="driving",
+                                             departure_time=date,
+                                             language="es")
+
+        legs = directions_result[0]["legs"][0]
+
+        steps = []
+        for step in legs["steps"]:
+            steps.append({
+                "html_instructions": step["html_instructions"],
+                "distance": step["distance"]
+            })
+
+        return {
+            "success": True,
+            "data": {
+                "distance": legs["distance"],
+                "duration": legs["duration"],
+                "duration_in_traffic": legs["duration_in_traffic"],
+                "steps": steps # {html_instructions, distance}
+            }
+        }
+
+    except:
         return {
             "success": False,
-            "error_msg": "Ubicación de partida no válida"
+            "error_msg": "Error al intentar obtener la ruta"
         }
-    # Call google API
-
-    return {
-        "success": False,
-        "error_msg": "Get traffic not implemented yet"
-    }
-

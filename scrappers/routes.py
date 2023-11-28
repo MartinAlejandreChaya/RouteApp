@@ -6,7 +6,7 @@ import lxml
 import re
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
-MAX_ROUTES = 5
+MAX_ROUTES = 1
 
 # PARAMS: The location around which we want to search for routes. Format (lat, long)
 # RETURNS: A list of routes
@@ -96,8 +96,9 @@ def get_route(URL):
         estrellas = False
 
     # Convert punto_inicio
-    punto_inicio = punto_inicio.split(",")
-    punto_inicio = {"lat": float(punto_inicio[0]), "long": float(punto_inicio[1])}
+    if (punto_inicio):
+        punto_inicio = punto_inicio.split(",")
+        punto_inicio = {"loc": {"lat": float(punto_inicio[0]), "long": float(punto_inicio[1])}}
 
     return {
         "nombre": nombre,
