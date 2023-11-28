@@ -39,10 +39,47 @@
     padding-right: 4px;
 }
 
+.results .sort_filter_options_container {
+    margin: 0px auto;
+    width: 70%;
+    min-width: 300px;
+}
+
+.results .sort_filter_options {
+    height: 0px;
+    transition: height 0.3s ease;
+    overflow: hidden;
+    background: var(--bg-light-gray);
+    border-radius: 5px;
+    box-shadow: 0.5px 0.5px 4px #e9e9e9;
+    margin: 0px;
+    padding: 0px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    align-items: baseline;
+}
+
+.results .sort_filter_options .order_checkboxes {
+    display: flex;
+    flex-direction: column;
+    max-height: 70px;
+    flex-wrap: wrap;
+}
+
+.results .sort_filter_options #order_crit_select {
+    max-height: 25px;
+    margin: 0;
+}
+.results .sort_filter_options h4 {
+    margin: 0px;
+}
+
 
 #result_list {
     display: flex;
     justify-content: center;
+    margin-top: 10px;
 }
 
 .result_grid {

@@ -8,6 +8,7 @@ let waiting_for_response = false;
 // MODAL
 let modal;
 let cerrar_modal;
+let routes = [];
 
 window.onload = () => {
      // Modal
@@ -84,7 +85,7 @@ window.onload = () => {
                 waiting_for_response = false;
 
                 if (data.success) {
-                    show_routes(data.routes);
+                    routes = reorder_routes(data.routes);
                 }
                 else {
                     show_error(data.error_msg);
@@ -94,6 +95,8 @@ window.onload = () => {
     });
 
     animate_placeholder_input(search_input, SEARCH_INPUT_EXAMPLES);
+
+    setup_sort_filter();
 }
 
 window.addEventListener("click", function (event) {
@@ -153,11 +156,15 @@ function show_error(error_msg) {
 }
 
 function show_routes(routes) {
+    if (routes.length == 0)
+        return;
+
     const cont = document.getElementById("result_list");
     cont.innerHTML = "";
 
     const grid = document.createElement("ul");
     grid.classList.add("result_grid")
+
 
     routes.forEach((route) => {
         const li = createRouteLi(route);
