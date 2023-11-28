@@ -6,7 +6,7 @@ import lxml
 import re
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
-MAX_ROUTES = 1
+MAX_ROUTES = 5
 
 # PARAMS: The location around which we want to search for routes. Format (lat, long)
 # RETURNS: A list of routes
