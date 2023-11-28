@@ -52,34 +52,29 @@ def get_traffic(from_loc, to_loc, gmaps, date=False):
         date = datetime.now()
 
     # Call google API
-    try:
-        directions_result = gmaps.directions(from_loc["address"],
-                                             to_loc["address"],
-                                             mode="driving",
-                                             departure_time=date,
-                                             language="es")
+    directions_result = gmaps.directions(from_loc["address"],
+                                         to_loc["address"],
+                                         mode="driving",
+                                         departure_time=date,
+                                         language="es")
+    if (len(directions_result) == 0):
+        print("Error in ", from_loc, " to ", to_loc)
+        return {"success": False, "error_msg": "No se puede hallar ruta a punto especificado"}
 
-        legs = directions_result[0]["legs"][0]
+    legs = directions_result[0]["legs"][0]
+    steps = []
+    for step in legs["steps"]:
+        steps.append({
+            "html_instructions": step["html_instructions"],
+            "distance": step["distance"]
+        })
 
-        steps = []
-        for step in legs["steps"]:
-            steps.append({
-                "html_instructions": step["html_instructions"],
-                "distance": step["distance"]
-            })
-
-        return {
-            "success": True,
-            "data": {
-                "distance": legs["distance"],
-                "duration": legs["duration"],
-                "duration_in_traffic": legs["duration_in_traffic"],
-                "steps": steps # {html_instructions, distance}
-            }
+    return {
+        "success": True,
+        "data": {
+            "distance": legs["distance"],
+            "duration": legs["duration"],
+            "duration_in_traffic": legs["duration_in_traffic"],
+            "steps": steps # {html_instructions, distance}
         }
-
-    except:
-        return {
-            "success": False,
-            "error_msg": "Error al intentar obtener la ruta"
-        }
+    }
