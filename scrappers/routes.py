@@ -13,7 +13,7 @@ MAX_ROUTES = 5
 def get_routes(loc):
 
     # Build square
-    coords = [loc["lat"], loc["long"], loc["lat"] + 0.1, loc["long"] + 0.1]
+    coords = [loc["lat"]-0.1, loc["long"]-0.1, loc["lat"] + 0.1, loc["long"] + 0.1]
 
     # Get routes close to loc url:
     URL="https://es.wikiloc.com/wikiloc/map.do?sw="+str(coords[0])+'%2C'+str(coords[1])+'&ne='+str(coords[2])+'%2C'+str(coords[3])

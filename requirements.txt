@@ -11,3 +11,4 @@ zipp==3.8.0
 googlemaps
 lxml
 selenium
+bs4
