@@ -96,8 +96,9 @@ def get_route(URL):
         estrellas = False
 
     # Convert punto_inicio
-    punto_inicio = punto_inicio.split(",")
-    punto_inicio = {"lat": float(punto_inicio[0]), "long": float(punto_inicio[1])}
+    if (punto_inicio):
+        punto_inicio = punto_inicio.split(",")
+        punto_inicio = {"loc": {"lat": float(punto_inicio[0]), "long": float(punto_inicio[1])}}
 
     return {
         "nombre": nombre,

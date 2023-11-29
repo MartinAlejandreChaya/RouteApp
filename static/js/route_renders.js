@@ -46,7 +46,8 @@ function createRouteLi(route) {
     if (route["traffic"] == false)
         traffic_str = route["traffic_error"]
     else
-        traffic = route["traffic"]
+        traffic_str = route["traffic"]["duration"]["text"]
+
     p5.innerHTML = "Transporte: <b>" + traffic_str + "</b>";
     // Link ruta
     const p6 = document.createElement("p")

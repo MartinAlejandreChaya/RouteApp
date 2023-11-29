@@ -64,6 +64,13 @@ def search():
 
     # Get climate in route
     for route in routes:
+        # Set route init point dir
+        if (route["route_data"]["punto_inicio"]):
+            address_res = get_dir(route["route_data"]["punto_inicio"]["loc"], gmaps)
+            if (address_res["success"]):
+                route["route_data"]["punto_inicio"]["address"] = address_res["address"]
+            else:
+                route["route_data"]["punto_inicio"]["address"] = False
 
         clima_res = get_clima(route["route_data"]["punto_inicio"])
         # Date too far in the future error
@@ -76,7 +83,7 @@ def search():
 
     # Get traffic in route
     for route in routes:
-
+        # TODO: Pass date parameter
         traffic_res = get_traffic(from_loc, route["route_data"]["punto_inicio"], gmaps)
 
         # From loc not null error
