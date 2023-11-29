@@ -148,7 +148,18 @@ function createRouteItem(route) {
         rest_div.appendChild(pp20);
     }
 
+    const div_3 = document.createElement("div");
+    const pp31 = document.createElement("p");
+    pp31.innerHTML = "Distancia a inicio: <b>" + route["traffic"]["distance"]["text"] + "</b>";
+    const pp32 = document.createElement("p");
+    pp32.innerHTML = "Duración del viaje hasta inicio: <b>" + route["traffic"]["duration"]["text"] + "</b>";
+    //const pp33 = document.createElement("p");
+    //pp7.innerHTML = "Desnivel positivo: <b>" + route["traffic"]["duration_in_traffic"] + "</b>";
 
+    div_3.appendChild(pp31);
+    div_3.appendChild(pp32);
+    //div_3.appendChild(pp33);
+    rest_div.appendChild(div_3);
 
 
     cont.appendChild(title_div);
