@@ -18,16 +18,3 @@ header .subtitle {
     margin: 5px 0 20px 0;
     padding: 0;
 }
-
-header nav ul {
-    list-style-type: none;
-    display: flex;
-    padding: 0px;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0;
-}
-
-header nav ul li {
-    margin: 0 10px;
-}

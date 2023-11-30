@@ -1,13 +1,30 @@
+.results {
+    margin-bottom: 30px;
+}
+
+.results_functionality {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
 
 .result_options {
+    margin-left: 50px;
+}
 
+.extra_params {
+    margin-left: 50px;
+}
+.extra_params span {
+    font-size: 0.8em;
+    color: var(--secondary-text-col);
 }
 
 .result_options ul {
     list-style-type: none;
     display: flex;
     flex-direction: row;
-    padding-left: 50px;
+    padding: 0px;
 }
 
 .result_options ul li {
@@ -37,6 +54,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     row-gap: 20px;
+    justify-content: center;
 }
 
 .result_grid li {
@@ -45,7 +63,7 @@
     margin-right: 30px;
     flex-grow: 1;
     border-radius: 3px;
-    /* max-width: 300px; */
+    max-width: 500px;
 }
 
 .result_grid li:hover {
