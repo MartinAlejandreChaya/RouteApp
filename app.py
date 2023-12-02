@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask import render_template
-from datetime import date
+from datetime import datetime, date
 
 app = Flask(__name__)
 
@@ -36,9 +36,20 @@ def search():
     }
 
     # route date
-    route_date = date.today()
+    route_date = datetime.now()
     if ("route_date" in params.keys()):
-        route_date = params["route_date"]
+        param_date = datetime.strptime(params["route_date"], "%Y-%m-%d")
+        today_date = datetime.today()
+        today_date = date(today_date.year, today_date.month, today_date.day)
+        o_date = date(param_date.year, param_date.month, param_date.day)
+        if (o_date < today_date):
+            return {
+                "success": False,
+                "error_msg": "La fecha propuesta es en el pasado"
+            }
+        elif (o_date >= today_date):
+            route_date = param_date.replace(hour=route_date.hour, minute=route_date.minute)
+
 
     # from loc
     from_loc = {
@@ -72,7 +83,7 @@ def search():
             else:
                 route["route_data"]["punto_inicio"]["address"] = False
 
-        clima_res = get_clima(route["route_data"]["punto_inicio"])
+        clima_res = get_clima(route["route_data"]["punto_inicio"], route_date)
         # Date too far in the future error
         if (not clima_res["success"]):
             route["clima"] = False
@@ -83,8 +94,7 @@ def search():
 
     # Get traffic in route
     for route in routes:
-        # TODO: Pass date parameter
-        traffic_res = get_traffic(from_loc, route["route_data"]["punto_inicio"], gmaps)
+        traffic_res = get_traffic(from_loc, route["route_data"]["punto_inicio"], gmaps, route_date)
 
         # From loc not null error
         if (not traffic_res["success"]):
@@ -97,7 +107,7 @@ def search():
     # Get acomodation in route
     for route in routes:
 
-        alojamientos_res = get_alojamientos(route["route_data"]["punto_inicio"])
+        alojamientos_res = get_alojamientos(route["route_data"]["punto_inicio"], route_date)
 
         if (not alojamientos_res["success"]):
             route["alojamientos"] = False
