@@ -1,6 +1,13 @@
 # Flask Template
 Basic structure for starting a Flask project with Jinja templates
 
+## Reorganización DME
+
+- **@Martin**: Terminando el frontend, y hilar los microservicios con el backend según estén hechos
+- **@Guille**: RouteListItem y RouteItem del Frontend (render_routes.js). Ir añadiendo los datos de tráfico, y los de clima y alojamiento cuando esté hecho.
+- **@Mar y @Laura**: terminar la función get_clima(loc, date). Importante, tiene que tener el formato que le expliqué a Laura el otro día.
+- **@Gabriel**: Función sync_data_warehouse que recopile información actualizada y la guarde en mongoDB. Función get_alojamientos(loc) que saque alojamientos de MongoDB.
+
 ## Notas para todos
 
 #### Interfaz de funciones
