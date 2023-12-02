@@ -86,6 +86,9 @@ function reorder_routes(routes) {
                 b_dist = parseFloat(b["route_data"]["distancia"].split(" ")[0].replace(',', '.'))
                 diff = a_dist - b_dist;
                 break;
+            case "transporte":
+                diff = a["traffic"]["duration_in_traffic"]["value"] - b["traffic"]["duration_in_traffic"]["value"]
+                break;
             default:
                 console.log("ERROR: No order criterion", order_crit_value);
                 break;
