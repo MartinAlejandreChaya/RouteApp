@@ -30,3 +30,14 @@
     padding: 2px 2px 2px 5px;
 }
 
+
+.filter_options_container {
+    display: flex;
+    justify-content: flex-start;
+    column-gap: 10px;
+    width: 100%;
+}
+
+.filter_range_inputs {
+    flex-grow: 1;
+}

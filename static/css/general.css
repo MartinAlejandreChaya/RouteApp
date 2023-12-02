@@ -1,10 +1,16 @@
 :root {
   --primary-text-col: black;
-  --secondary-text-col: #616161;
-  --highlight-text-col: #646fe8;
+  --secondary-text-col: #646464;
+  --highlight-text-col: #558B2F;
 
-  --bg-yellow: #FFEB3B;
-  --bg-light-gray: #e9e9e9;
+  --bg-yellow: #9CCC65;
+  --bg-light-gray: #F1F8E9;
+
+  --slider-col: #9CCC65;
+  --slider-thumb-col: #33691E;
+  --slider-thumb-disabled: #a1a1a1;
+
+  --disabled-col: #c7c7c7;
 }
 
 body {
@@ -23,4 +29,28 @@ body {
     color: var(--secondary-text-col);
     font-size: 1em;
     font-weight: normal;
+}
+
+/* Style the range input */
+input[type="range"]:disabled {
+    background: var(--disabled-col); /* Default background color */
+}
+input[type="range"] {
+    -webkit-appearance: none;
+    height: 10px;
+    background: var(--slider-col); /* Default background color */
+    border-radius: 10px;
+}
+
+/* Style the thumb (the slider knob) */
+input[type="range"]:disabled::-webkit-slider-thumb {
+    background: var(--slider-thumb-disabled); /* Thumb color */
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--slider-thumb-col); /* Thumb color */
+    border-radius: 50%;
+    cursor: pointer;
 }

@@ -58,6 +58,9 @@ function setup_sort_filter() {
         }
         filter_options_displayed = !filter_options_displayed;
     })
+
+
+    setup_filter_values();
 }
 
 function reorder_routes(routes) {
@@ -100,4 +103,90 @@ function get_dict_val(dict, val) {
         console.log("Value " + val + " not in dificultad_dict: ", dict)
         return 0;
     }
+}
+
+
+// FILTRAR
+function toggleRange(toggleCheckbox, slider_id) {
+    var slider = document.getElementById(slider_id);
+    slider.disabled = !toggleCheckbox.checked;
+
+    prop = slider.name.split("_")[0]
+    prop_span = document.getElementById("filter_" + prop + "_span");
+    dict = get_filter_dict(prop)
+
+    filter_change(prop, prop_span, dict, slider.value)
+
+    if (slider.disabled) {
+        prop_span.innerHTML = "";
+    }
+}
+
+
+function setup_filter_values() {
+    dificultad_range = document.getElementById("dificultad_range");
+    dificultad_span = document.getElementById("filter_dificultad_span");
+
+    dificultad_range.addEventListener("input", () => {
+        filter_change("dificultad", dificultad_span, dificultad_filter_dict, dificultad_range.value)
+    })
+
+
+    distancia_range = document.getElementById("distancia_range");
+    distancia_span = document.getElementById("filter_distancia_span");
+
+    distancia_range.addEventListener("input", () => {
+        filter_change("distancia", distancia_span, distancia_filter_dict, distancia_range.value)
+    })
+
+
+    transporte_range = document.getElementById("transporte_range");
+    transporte_span = document.getElementById("filter_transporte_span");
+
+    transporte_range.addEventListener("input", () => {
+        filter_change("transporte", transporte_span, transporte_filter_dict, transporte_range.value)
+    })
+
+}
+
+function filter_change(property, span, dict, value) {
+    span.innerHTML = dict[value];
+    // TODO: Actually filter
+}
+
+function get_filter_dict(prop) {
+    if (prop == "dificultad")
+        return dificultad_filter_dict
+    else if (prop == "distancia")
+        return distancia_filter_dict
+    else if (prop == "transporte")
+        return transporte_filter_dict
+    else {
+        console.log("Error: No filter property: " + prop);
+        return {}
+    }
+}
+
+dificultad_filter_dict = {
+    0: "Muy fácil",
+    25: "Fácil",
+    50: "Moderado",
+    75: "Difícil",
+    100: "Muy difícil"
+}
+
+distancia_filter_dict = {
+    0: "0km - 5km",
+    25: "5km - 10km",
+    50: "10km - 20km",
+    75: "20km - 40km",
+    100: ">40 km"
+}
+
+transporte_filter_dict = {
+    0: "< 20m",
+    25: "< 40m",
+    50: "< 1h",
+    75: "< 2h",
+    100: "> 2h"
 }

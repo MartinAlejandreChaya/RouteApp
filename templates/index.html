@@ -42,7 +42,35 @@
 
         <div class="sort_filter_options_container">
             <div class="sort_filter_options" id="filter_options">
-                test filter
+                <h4>Filtrar</h4>
+                <div class="filter_range_inputs">
+                        <div class="filter_options_container">
+                            <div>
+                                <label for="toggleDificultad">Dificultad</label>
+                                <input type="checkbox" id="toggleDificultad" onchange="toggleRange(this, 'dificultad_range')">
+                            </div>
+                            <input type="range" id="dificultad_range" name="dificultad_range" min="0" max="100" value="50" step="25" disabled>
+                            <span id="filter_dificultad_span"></span>
+                        </div>
+
+                        <div class="filter_options_container">
+                            <div>
+                                <label for="toggleDistancia">Distancia</label>
+                                <input type="checkbox" id="toggleDistancia" onchange="toggleRange(this, 'distancia_range')">
+                            </div>
+                             <input type="range" id="distancia_range" name="distancia_range" min="0" max="100" value="50" step="25" disabled>
+                            <span id="filter_distancia_span"></span>
+                        </div>
+
+                        <div class="filter_options_container">
+                            <div>
+                                <label for="toggleTransporte">Transporte</label>
+                                <input type="checkbox" id="toggleTransporte" onchange="toggleRange(this, 'transporte_range')">
+                            </div>
+                            <input type="range" id="transporte_range" name="transporte_range" min="0" max="100" value="50" step="25" disabled>
+                            <span id="filter_transporte_span"></span>
+                        </div>
+                </div>
             </div>
             <div class="sort_filter_options" id="sort_options">
                 <h4>Ordenar</h4>
