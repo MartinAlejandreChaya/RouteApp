@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/results.css') }}">
 
 <script src="{{ url_for('static', filename='js/route_renders.js') }}"></script>
+<script src="{{ url_for('static', filename='js/filter_sort.js') }}"></script>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
 {% endblock %}
@@ -27,8 +28,8 @@
         <div class="results_functionality">
             <div class="result_options">
                 <ul>
-                    <li><i class="fa fa-solid fa-filter icon"></i>Filter</li>
-                    <li><i class="fa fa-solid fa-sort icon"></i>Sort</li>
+                    <li id="filter_li"><i class="fa fa-solid fa-filter icon"></i>Filtar</li>
+                    <li id="sort_li"><i class="fa fa-solid fa-sort icon"></i>Ordenar</li>
                 </ul>
             </div>
 
@@ -38,6 +39,78 @@
                 <input class="location_input" type="text" id="location_input"/>
             </div>
         </div>
+
+        <div class="sort_filter_options_container">
+            <div class="sort_filter_options" id="filter_options">
+                <h4>Filtrar</h4>
+                <div class="filter_range_inputs">
+                        <div class="filter_options_container">
+                            <div>
+                                <label for="toggleDificultad">Dificultad</label>
+                                <input type="checkbox" id="toggleDificultad" onchange="toggleRange(this, 'dificultad_range')">
+                            </div>
+                            <input type="range" id="dificultad_range" name="dificultad_range" min="0" max="100" value="50" step="25" disabled>
+                            <span id="filter_dificultad_span"></span>
+                        </div>
+
+                        <div class="filter_options_container">
+                            <div>
+                                <label for="toggleDistancia">Distancia</label>
+                                <input type="checkbox" id="toggleDistancia" onchange="toggleRange(this, 'distancia_range')">
+                            </div>
+                             <input type="range" id="distancia_range" name="distancia_range" min="0" max="100" value="50" step="25" disabled>
+                            <span id="filter_distancia_span"></span>
+                        </div>
+
+                        <div class="filter_options_container">
+                            <div>
+                                <label for="toggleTransporte">Transporte</label>
+                                <input type="checkbox" id="toggleTransporte" onchange="toggleRange(this, 'transporte_range')">
+                            </div>
+                            <input type="range" id="transporte_range" name="transporte_range" min="0" max="100" value="50" step="25" disabled>
+                            <span id="filter_transporte_span"></span>
+                        </div>
+                </div>
+            </div>
+            <div class="sort_filter_options" id="sort_options">
+                <h4>Ordenar</h4>
+
+                <select id="order_crit_select">
+                    <option value="ascendente">Ascendente</option>
+                    <option value="descendente">Descendente</option>
+                </select>
+
+                <div class="order_checkboxes">
+                    <div>
+                        <input type="checkbox" disabled="true" value="recomendado" name="checkboxGroup" id="order_crit_recomendado" class="checkboxes" checked="true">
+                        <label for="order_crit_recomendado">Recomendado</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" value="distancia" name="checkboxGroup" id="order_crit_distancia" class="checkboxes">
+                        <label for="order_crit_distancia">Distancia</label>
+                    </diV>
+
+                    <div>
+                        <input type="checkbox" value="dificultad" name="checkboxGroup" id="order_crit_dificultad" class="checkboxes">
+                        <label for="order_crit_dificultad">Dificultad</label>
+                    </div>
+
+                    <div>
+                         <input type="checkbox" disabled="true" value="clima" name="checkboxGroup" id="order_crit_clima" class="checkboxes">
+                        <label for="order_crit_clima">Clima</label>
+                    </div>
+
+                    <div>
+                         <input type="checkbox" value="transporte" name="checkboxGroup" id="order_crit_transporte" class="checkboxes">
+                        <label for="order_crit_transporte">Transporte</label>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
 
 
         <div id="result_list">
