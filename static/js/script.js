@@ -86,6 +86,8 @@ window.onload = () => {
 
                 if (data.success) {
                     routes = reorder_routes(data.routes);
+                    routes = filter_routes(routes);
+                    show_routes(routes);
                 }
                 else {
                     show_error(data.error_msg);
@@ -156,8 +158,8 @@ function show_error(error_msg) {
 }
 
 function show_routes(routes) {
-    if (routes.length == 0)
-        return;
+    // if (routes.length == 0)
+        // return;
 
     const cont = document.getElementById("result_list");
     cont.innerHTML = "";
@@ -167,6 +169,7 @@ function show_routes(routes) {
 
 
     routes.forEach((route) => {
+        if (route.filtered) return;
         const li = createRouteLi(route);
         grid.append(li);
         li.addEventListener("click", (event) => {
@@ -177,5 +180,8 @@ function show_routes(routes) {
     })
 
     cont.appendChild(grid);
+    if (routes.length == 0) {
+        cont.innerHTML = "Ninguna ruta cumple las restricciones especificadas"
+    }
 }
 
