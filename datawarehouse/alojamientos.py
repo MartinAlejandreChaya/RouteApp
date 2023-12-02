@@ -5,7 +5,7 @@ def actualizar_datawarehouse():
 
     return True
 
-def get_alojamientos(loc):
+def get_alojamientos(loc, date):
 
     return {
         "success": False,
