@@ -4,15 +4,6 @@ import googlemaps
 from datetime import datetime
 
 
-"""
-    now = datetime.now()
-    directions_result = gmaps.directions("Sydney Town Hall",
-                                         "Parramatta, NSW",
-                                         mode="transit",
-                                         departure_time=now)
-    print(directions_result)
-
-"""
 
 # Returns {"long": , "lat": } of loc
 def get_lat_long(address, gmaps):
