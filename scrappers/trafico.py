@@ -36,9 +36,16 @@ def get_dir(loc, gmaps):
 
     res = reverse_geocode_result[0]["formatted_address"]
 
+    municipio = False
+    add_comp = reverse_geocode_result[0]["address_components"]
+    for elem in add_comp:
+        if ("locality" in elem["types"]):
+            municipio = elem["long_name"]
+
     return {
         "success": True,
-        "address": res
+        "address": res,
+        "municipio": municipio
     }
 
 
