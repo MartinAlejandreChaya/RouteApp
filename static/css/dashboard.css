@@ -4,14 +4,18 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
 
-    padding: 20px 0 20px 0;
+    padding: 20px 0px 20px 0px;
     background: var(--bg-yellow);
 }
 
 .search_bar .title_input {
     border: none;
+    font-size: 1.2em;
+    width: 300px;
 }
+
 .search_bar .title_input:focus {
     outline: none;
 }
@@ -26,3 +30,14 @@
     padding: 2px 2px 2px 5px;
 }
 
+
+.filter_options_container {
+    display: flex;
+    justify-content: flex-start;
+    column-gap: 10px;
+    width: 100%;
+}
+
+.filter_range_inputs {
+    flex-grow: 1;
+}
