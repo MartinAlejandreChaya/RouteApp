@@ -80,10 +80,11 @@ def search():
             address_res = get_dir(route["route_data"]["punto_inicio"]["loc"], gmaps)
             if (address_res["success"]):
                 route["route_data"]["punto_inicio"]["address"] = address_res["address"]
+                municipio = address_res["municipio"]
             else:
                 route["route_data"]["punto_inicio"]["address"] = False
 
-        clima_res = get_clima(route["route_data"]["punto_inicio"], route_date)
+        clima_res = get_clima(municipio, route_date)
         # Date too far in the future error
         if (not clima_res["success"]):
             route["clima"] = False
