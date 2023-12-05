@@ -63,14 +63,14 @@ def get_route(URL):
     dificultad_tecnica = get_span_content("Dificultad técnica", soup)
     desnivel_negativo = get_span_content("Desnivel negativo", soup)
     altitud_maxima = get_span_content("Altitud máxima", soup)
-    trailrank = get_span_content("Trailrank", soup)
     altitud_minima = get_span_content("Altitud mínima", soup)
     tipo_ruta = get_span_content("Tipo de ruta", soup)
+    trailrank = get_span_content_trail(soup)
 
     # Nombre
     try:
-        b = soup.find("h1", class_="d-inline dont-break-out")
-        nombre = b.text.replace("\t", "").replace("\n", "")
+        b = soup.find("div", class_="view__header__title")
+        nombre = b.find("h1").text.replace("\t", "").replace("\n", "")
     except:
         nombre = False
 
@@ -117,10 +117,27 @@ def get_route(URL):
 
 def get_span_content(name, soup):
     try:
-        b = soup.find('p', string=name)
-        siguiente = b.find_next_sibling('span')
+        b = soup.find('dt', string=name)
+
+
+        siguiente = b.parent.find("dd")
+
+
         return siguiente.text.replace("\xa0", " ")
     except:
         return False
+def get_span_content_trail(soup):
+    try:
+        b = soup.find('span', class_="help-tooltip glyphicon icon-question-sign")
+        siguiente = b.parent.parent.find("dd")
+        siguiente.find("span").text
 
+        return siguiente.find("span").text
+    except:
+        return False
+
+URL="https://es.wikiloc.com/rutas-senderismo/mirador-del-roldan-por-la-senda-de-la-valla-146333974"
+
+ruta=get_route(URL)
+print(ruta)
 
