@@ -3,6 +3,8 @@
 # Returns: {"sucess": True/False, "climate": climate_data}
 import aemet.constants as cons
 from aemet import Aemet, Municipio, Prediccion
+from datetime import datetime, timedelta
+import json
 aemet_client=Aemet(api_key='eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsYXVyYXNjMjAwMUBnbWFpbC5jb20iLCJqdGkiOiIxNjIyZmI4ZS05YWQ1LTQwOGMtODc1Zi1iNDU4OWY3NmQyMWMiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTcwMDU4OTM5NSwidXNlcklkIjoiMTYyMmZiOGUtOWFkNS00MDhjLTg3NWYtYjQ1ODlmNzZkMjFjIiwicm9sZSI6IiJ9.-Ega71ci8LU5Ss2ZiYyRsyQQUEoHzisddpn9iH2BpU8')
 
 
@@ -10,8 +12,60 @@ aemet_client=Aemet(api_key='eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsYXVyYXNjMjAwMUBnbWF
 
 # Script that gets the expected climate on location loc from aemet API
 # Returns: {"sucess": True/False, "climate": climate_data}
+
+
+#------------------------ Calculamos los dias de diiferencia entre la fecha introducida y la fecha actual------------------------
+def days_from_today(date):
+    # Get the date of today
+    today = datetime.now().date()
+
+    # Convierte la cadena de fecha a un objeto datetime
+    date_object = datetime.strptime(date, '%Y-%m-%d').date()
+
+    # Calcula la diferencia de días
+    difference = today - date_object
+
+    # Verifica si la diferencia es más de una semana
+    if difference.days > 7 or difference.days<0 :
+        return -1
+    else:
+        return difference.days
+
+
+
+
+#---------------------------- Obtiene la predicción del día que se le introduce ----------------------
+def get_weather_data(day_data):
+    prediccion = []
+    precipitacion = day_data.get('probPrecipitacion')
+    cotanieve = day_data.get('cotaNieveProv')
+    estadocielo = day_data.get('estadoCielo')
+    viento = day_data.get('viento')
+    temperatura= day_data.get('temperatura')
+    sensacion=day_data.get('sensTermica')
+    humedad= day_data.get('humedadRelativa')
+    prediccion.append({"Precipitacion": precipitacion[0].get('value'),
+                       "Probabilidad de nieve": cotanieve[0].get('value'),
+                       "Estado del cielo":estadocielo[0].get('descripcion'),
+                       "Viento":viento[0].get('velocidad'),
+                       "Temperatura":{"Maxima":temperatura.get('maxima'),"Minima":temperatura.get('minima')},
+                       "Sensacion termica":{"Maxima":sensacion.get('maxima'),"Minima":sensacion.get('minima')},
+                       "Humedad relativa":{"Maxima":humedad.get('maxima'),"Minima":humedad.get('minima')},
+                       "Radiacion UV maxima": day_data.get('uvMax')
+                       })
+
+    with open ('prueba.json', 'w') as prueba:
+        json.dump(prediccion, prueba, indent=2)
+
+    return prediccion
+        
+
+
+
+
+
+#------------------------------ Obtenemos el diccionario con el clima -----------------------------
 def get_clima(loc, date):
-    # loc = nombre municipio
     if (not loc):
         return {
             "success": False,
@@ -28,9 +82,7 @@ def get_clima(loc, date):
             "error_msg": "No se puede obtener predicción para la fecha especificada"
         }
     
-    # Programa mar y laura
-    mun = Municipio.buscar(loc) # muns es un objeto de la clase municipio por eso minima y maxima no la pillan que son objetos de la clase prediccionDia
-
+    mun = Municipio.buscar(loc) 
     if (len(mun) == 0):
         return {
             "success": False,
@@ -45,32 +97,13 @@ def get_clima(loc, date):
 
     weather_data = get_weather_data(our_day)
 
-    for key in our_day:
-        print("KEY: ", key)
-        print(our_day[key])
-
     return {
         "success": True,
         "data": weather_data
     }
 
 
+#------------------------ Obtenemos la función get_clima -------------------
 
-
-
-def days_from_today(date):
-
-    return 2
-
-def get_weather_data(day_data):
-
-    return {
-        "Probabilidad de precipitacion": day_data["probPrecipitacion"][0]["value"],
-        "Estado del cielo": day_data["estadoCielo"][0]["descripcion"],
-        "Humedad relativa": {
-            "minimo": 1234,
-            "maximo": 1234
-        }
-    }
-
-get_clima("Málaga","2023-12-04")
+   
+get_clima("Madrid","2023-12-06")
