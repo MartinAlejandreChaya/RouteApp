@@ -9,7 +9,7 @@ db = client['alojamientos']
 collection = db['collection']
 
 def get_alojamientos(loc):
-    try:
+    """ try:
         # Busca todos los documentos que contienen el valor en el campo 'city'
         result = collection.find({"city": loc})
 
@@ -18,11 +18,53 @@ def get_alojamientos(loc):
 
         return {"success": True, "data": data_list}
     except Exception as e:
-        return {"success": False, "error": str(e)}
+        return {"success": False, "error_msg": str(e)} """
+    
+    return {
+        "accommodation_type_name": "Casas rurales",
+        "latitude": 41.4658352733754,
+        "longitude": 1.82865500450134,
+        "hotel_id": 1839613,
+        "main_photo_url": "https://cf.bstatic.com/xdata/images/hotel/square60/87453742.jpg?k=546b61dd65eebc565bbf6b76db63bf4f928797b64de01e28f11b23f0bd417896&o=",
+        "hotel_name": "Masia Can Canyes & Spa",
+        "url": "https://www.booking.com/hotel/es/masia-can-canyes-1712.html",
+        "checkout": {
+        "from": "06:00",
+        "until": "12:00"
+        },
+        "checkin": {
+        "from": "15:00",
+        "until": "21:30"
+        },
+        "review_score": 9.4,
+        "city": [
+        "San Lorenzo de Hortons"
+        ],
+        "address": "Cami de Can Canyes s/n Masia - Alt Pened\u00e8s",
+        "district": "",
+        "price_breakdown": {
+        "has_tax_exceptions": 0,
+        "has_incalculable_charges": 0,
+        "all_inclusive_price": 128.68,
+        "gross_price": 127.58,
+        "sum_excluded_raw": "1.10",
+        "has_fine_print_charges": 1,
+        "currency": "EUR"
+        }
+    }
 
 def insert_data_to_mongo():
     try:
+        collection.delete_many({})
+        with open('locations.json', 'r') as loc:
+            locations = json.load(loc)
 
+        with open('accomodations.json', 'w') as accoms:
+            json.dump({}, accoms)
+
+        for locs in locations:
+            get_location_id(locs)
+    
         # Lee los datos desde el archivo JSON
         with open('accomodations.json', 'r') as file:
             data = json.load(file)
@@ -63,8 +105,7 @@ def get_location_id(location):
             # Guardar la información combinada en el archivo accomodations.json
             with open('destinations.json', 'w') as destinations_file:
                 json.dump(destinations, destinations_file, indent=2)
-
-            print("Datos guardados en destinations.json.")
+                
         else:
             print("La estructura del JSON no es la esperada (no es una lista de objetos).")
     else:
@@ -117,7 +158,7 @@ def get_accomodations(destination):
 
                 response = requests.get(url, headers=headers, params=querystring)
 
-                accomodations = parse_accoms_json(response)
+                accomodations = parse_accoms_json(response, destination)
 
             else:
                 print("Error: dest_id or dest_type not present in destination.json")
@@ -139,7 +180,7 @@ def get_accomodations(destination):
     except Exception as e:
         print(f"Error: {e}")
 
-def parse_accoms_json(response):
+def parse_accoms_json(response, dest):
 
     accomodations = []
 
@@ -160,7 +201,7 @@ def parse_accoms_json(response):
             checkout = res.get('checkout')
             checkin = res.get('checkin')
             score = res.get('review_score')
-            city = res.get('city'),
+            city = dest,
             address = res.get('address')
             district = res.get('district')
             price = res.get('price_breakdown')
@@ -171,6 +212,3 @@ def parse_accoms_json(response):
     else:
         print(f"Error en la solicitud. Código de estado: {response.status_code}")
     return accomodations
-
-
-#get_accomodations("Barcelona")
