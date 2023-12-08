@@ -20,7 +20,7 @@ def days_from_today(date):
     today = datetime.now()
 
     # Calcula la diferencia de días
-    difference = today - date
+    difference = date - today
 
     # Verifica si la diferencia es más de una semana
     if difference.days > 7 or difference.days < 0:

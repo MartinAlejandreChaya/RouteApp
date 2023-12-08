@@ -136,8 +136,3 @@ def get_span_content_trail(soup):
     except:
         return False
 
-URL="https://es.wikiloc.com/rutas-senderismo/mirador-del-roldan-por-la-senda-de-la-valla-146333974"
-
-ruta=get_route(URL)
-print(ruta)
-
