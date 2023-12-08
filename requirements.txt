@@ -12,3 +12,4 @@ googlemaps
 lxml
 selenium
 bs4
+python-aemet
