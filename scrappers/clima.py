@@ -36,7 +36,6 @@ def days_from_today(date):
 
 #---------------------------- Obtiene la predicción del día que se le introduce ----------------------
 def get_weather_data(day_data):
-    prediccion = []
     precipitacion = day_data.get('probPrecipitacion')
     cotanieve = day_data.get('cotaNieveProv')
     estadocielo = day_data.get('estadoCielo')
@@ -44,20 +43,18 @@ def get_weather_data(day_data):
     temperatura= day_data.get('temperatura')
     sensacion=day_data.get('sensTermica')
     humedad= day_data.get('humedadRelativa')
-    prediccion.append({"Precipitacion": precipitacion[0].get('value'),
-                       "Probabilidad de nieve": cotanieve[0].get('value'),
-                       "Estado del cielo":estadocielo[0].get('descripcion'),
-                       "Viento":viento[0].get('velocidad'),
-                       "Temperatura":{"Maxima":temperatura.get('maxima'),"Minima":temperatura.get('minima')},
-                       "Sensacion termica":{"Maxima":sensacion.get('maxima'),"Minima":sensacion.get('minima')},
-                       "Humedad relativa":{"Maxima":humedad.get('maxima'),"Minima":humedad.get('minima')},
-                       "Radiacion UV maxima": day_data.get('uvMax')
-                       })
 
-    with open ('prueba.json', 'w') as prueba:
-        json.dump(prediccion, prueba, indent=2)
+    return {
+        "Precipitacion": precipitacion[0].get('value'),
+        "Probabilidad de nieve": cotanieve[0].get('value'),
+        "Estado del cielo":estadocielo[0].get('descripcion'),
+        "Viento":viento[0].get('velocidad'),
+        "Temperatura":{"Maxima":temperatura.get('maxima'),"Minima":temperatura.get('minima')},
+        "Sensacion termica":{"Maxima":sensacion.get('maxima'),"Minima":sensacion.get('minima')},
+        "Humedad relativa":{"Maxima":humedad.get('maxima'),"Minima":humedad.get('minima')},
+        "Radiacion UV maxima": day_data.get('uvMax')
+    }
 
-    return prediccion
         
 
 
@@ -101,9 +98,6 @@ def get_clima(loc, date):
         "success": True,
         "data": weather_data
     }
-
-
-#------------------------ Obtenemos la función get_clima -------------------
 
    
 get_clima("Madrid","2023-12-06")
