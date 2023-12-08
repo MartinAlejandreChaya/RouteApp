@@ -17,16 +17,13 @@ aemet_client=Aemet(api_key='eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsYXVyYXNjMjAwMUBnbWF
 #------------------------ Calculamos los dias de diiferencia entre la fecha introducida y la fecha actual------------------------
 def days_from_today(date):
     # Get the date of today
-    today = datetime.now().date()
-
-    # Convierte la cadena de fecha a un objeto datetime
-    date_object = datetime.strptime(date, '%Y-%m-%d').date()
+    today = datetime.now()
 
     # Calcula la diferencia de días
-    difference = today - date_object
+    difference = today - date
 
     # Verifica si la diferencia es más de una semana
-    if difference.days > 7 or difference.days<0 :
+    if difference.days > 7 or difference.days < 0:
         return -1
     else:
         return difference.days
@@ -57,11 +54,6 @@ def get_weather_data(day_data):
 
         
 
-
-
-
-
-#------------------------------ Obtenemos el diccionario con el clima -----------------------------
 def get_clima(loc, date):
 
     if (not loc):
@@ -100,5 +92,4 @@ def get_clima(loc, date):
         "data": weather_data
     }
 
-   
-get_clima("Madrid","2023-12-06")
+

@@ -1,14 +1,17 @@
-from pymongo import MongoClient
 import requests
 import json
 from datetime import datetime, timedelta
 
 # Configura la conexión a MongoDB
-client = MongoClient('mongodb://localhost:27017/')
-db = client['alojamientos']
-collection = db['collection']
+DEV = True
 
-def get_alojamientos(loc):
+if (not DEV):
+    from pymongo import MongoClient
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client['alojamientos']
+    collection = db['collection']
+
+def get_alojamientos(loc, date):
     """ try:
         # Busca todos los documentos que contienen el valor en el campo 'city'
         result = collection.find({"city": loc})
@@ -18,39 +21,44 @@ def get_alojamientos(loc):
 
         return {"success": True, "data": data_list}
     except Exception as e:
-        return {"success": False, "error_msg": str(e)} """
+        return {"success": False, "error_msg": "Error al buscar alojamiento"} """
     
     return {
-        "accommodation_type_name": "Casas rurales",
-        "latitude": 41.4658352733754,
-        "longitude": 1.82865500450134,
-        "hotel_id": 1839613,
-        "main_photo_url": "https://cf.bstatic.com/xdata/images/hotel/square60/87453742.jpg?k=546b61dd65eebc565bbf6b76db63bf4f928797b64de01e28f11b23f0bd417896&o=",
-        "hotel_name": "Masia Can Canyes & Spa",
-        "url": "https://www.booking.com/hotel/es/masia-can-canyes-1712.html",
-        "checkout": {
-        "from": "06:00",
-        "until": "12:00"
-        },
-        "checkin": {
-        "from": "15:00",
-        "until": "21:30"
-        },
-        "review_score": 9.4,
-        "city": [
-        "San Lorenzo de Hortons"
-        ],
-        "address": "Cami de Can Canyes s/n Masia - Alt Pened\u00e8s",
-        "district": "",
-        "price_breakdown": {
-        "has_tax_exceptions": 0,
-        "has_incalculable_charges": 0,
-        "all_inclusive_price": 128.68,
-        "gross_price": 127.58,
-        "sum_excluded_raw": "1.10",
-        "has_fine_print_charges": 1,
-        "currency": "EUR"
-        }
+        "success": True,
+        "data": [
+            {
+                "accommodation_type_name": "Casas rurales",
+                "latitude": 41.4658352733754,
+                "longitude": 1.82865500450134,
+                "hotel_id": 1839613,
+                "main_photo_url": "https://cf.bstatic.com/xdata/images/hotel/square60/87453742.jpg?k=546b61dd65eebc565bbf6b76db63bf4f928797b64de01e28f11b23f0bd417896&o=",
+                "hotel_name": "Masia Can Canyes & Spa",
+                "url": "https://www.booking.com/hotel/es/masia-can-canyes-1712.html",
+                "checkout": {
+                    "from": "06:00",
+                    "until": "12:00"
+                },
+                "checkin": {
+                    "from": "15:00",
+                    "until": "21:30"
+                },
+                "review_score": 9.4,
+                "city": [
+                    "San Lorenzo de Hortons"
+                ],
+                "address": "Cami de Can Canyes s/n Masia - Alt Pened\u00e8s",
+                "district": "",
+                "price_breakdown": {
+                    "has_tax_exceptions": 0,
+                    "has_incalculable_charges": 0,
+                    "all_inclusive_price": 128.68,
+                    "gross_price": 127.58,
+                    "sum_excluded_raw": "1.10",
+                    "has_fine_print_charges": 1,
+                    "currency": "EUR"
+                }
+            }
+        ]
     }
 
 def insert_data_to_mongo():
@@ -215,4 +223,5 @@ def parse_accoms_json(response, dest):
     return accomodations
 
 
-insert_data_to_mongo()
+if (not DEV):
+    insert_data_to_mongo()
