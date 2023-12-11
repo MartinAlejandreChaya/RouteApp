@@ -47,8 +47,8 @@ function setup_sort_filter() {
         });
     });
     const order_select = document.getElementById("order_crit_select");
-    order_crit_select.addEventListener("change", () => {
-        order_select_value = order_crit_select.value;
+    order_select.addEventListener("change", () => {
+        order_select_value = order_select.value;
         routes = reorder_routes(routes);
         show_routes(routes);
     })
@@ -89,6 +89,9 @@ function reorder_routes(routes) {
             case "transporte":
                 diff = a["traffic"]["duration_in_traffic"]["value"] - b["traffic"]["duration_in_traffic"]["value"]
                 break;
+            case "alojamiento":
+                diff = a["alojamientos"]["min_price"]["value"] - b["alojamientos"]["min_price"]["value"];
+                break;
             default:
                 console.log("ERROR: No order criterion", order_crit_value);
                 break;
@@ -124,8 +127,11 @@ function filter_routes(routes) {
         filtered = false;
         if (filter_crit_dificultad)
             filtered = filtered || route["route_data"]["dificultad_tecnica"] != dificultad_lims;
-        if (filter_crit_distancia)
-            filtered = filtered || route["route_data"]["distancia"] < distancia_lims[0] || route["route_data"]["distancia"] > distancia_lims[1]
+        if (filter_crit_distancia) {
+            let dist = parseFloat(route["route_data"]["distancia"].split(" ")[0].replace(",", "."))
+            filtered = filtered || dist < distancia_lims[0] || dist > distancia_lims[1]
+        }
+            
         if (filter_crit_transporte)
             filtered = filtered || filter_transport_time(route["traffic"]["duration_in_traffic"])
         route["filtered"] = filtered;

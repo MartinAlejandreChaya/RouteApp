@@ -129,7 +129,7 @@
     display: none; /* Por defecto, estará oculto */
     position: fixed; /* Posición fija */
     z-index: 1; /* Se situará por encima de otros elementos de la página*/
-    padding-top: 200px; /* El contenido estará situado a 200px de la parte superior */
+    /* padding-top: 200px; /* El contenido estará situado a 200px de la parte superior */
     left: 0;
     top: 0;
     width: 100%; /* Ancho completo */
@@ -142,9 +142,13 @@
     border-radius: 10px;
     position: relative; /* Relativo con respecto al contenedor -modal- */
     background-color: white;
-    margin: auto; /* Centrada */
+    overflow-y: auto;
+    /* margin: auto; /* Centrada */
     padding: 20px;
     width: 60%;
+    height: 70%;
+    top: 15%;
+    left: 20%;
     -webkit-animation-name: animarsuperior;
     -webkit-animation-duration: 0.5s;
     animation-name: animarsuperior;
@@ -172,4 +176,35 @@
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+.modal-content p {
+    margin: 4px 0;
+}
+
+.modal-content .route_header {
+    display: flex;
+    align-items: stretch;
+}
+
+.modal-content .route_header .right_div {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+}
+.modal-content .route_header .right_div iframe {
+    width: 100%;
+    flex-grow: 1;
+}
+
+
+.modal-content .route_rest {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 20px;
+    flex-wrap: wrap;
+}
+.modal-content .route_rest > div {
+    min-width: 200px;
 }

@@ -2,6 +2,8 @@
 
 {% block title %} Home {% endblock %}
 
+
+
 {% block header %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/results.css') }}">
@@ -14,6 +16,18 @@
 
 
 {% block body %}
+
+<!-- Ventana modal, por defecto no visiblel -->
+<div id="ventanaModal" class="modal">
+    <div class="modal-content">
+        <span id="cerrar">&times;</span>
+        <div id="modal_route_div">
+            <h2>Ventana modal</h2>
+            <p>Esto es el texto de la ventana</p>
+        </div>
+    </div>
+</div>
+
 
 <div>
     <div class="search_bar">
@@ -97,8 +111,8 @@
                     </div>
 
                     <div>
-                         <input type="checkbox" disabled="true" value="clima" name="checkboxGroup" id="order_crit_clima" class="checkboxes">
-                        <label for="order_crit_clima">Clima</label>
+                         <input type="checkbox" value="alojamiento" name="checkboxGroup" id="order_crit_alojamiento" class="checkboxes">
+                        <label for="order_crit_alojamiento">Alojamiento</label>
                     </div>
 
                     <div>
@@ -119,16 +133,7 @@
 
     </div>
 
-    <!-- Ventana modal, por defecto no visiblel -->
-    <div id="ventanaModal" class="modal">
-        <div class="modal-content">
-            <span id="cerrar">&times;</span>
-            <div id="modal_route_div">
-                <h2>Ventana modal</h2>
-                <p>Esto es el texto de la ventana</p>
-            </div>
-        </div>
-    </div>
+    
 </div>
 
 {% endblock %}
