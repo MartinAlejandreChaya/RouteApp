@@ -1,12 +1,15 @@
 from flask import Flask, request, jsonify
-from flask import render_template
+from flask import render_template, make_response
 from datetime import datetime, date
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    response = make_response(render_template('index.html'))
+    response.headers["X-Frame-Options"] = ""
+    return response
+
 
 
 from scrappers.routes import get_routes
@@ -80,11 +83,12 @@ def search():
             address_res = get_dir(route["route_data"]["punto_inicio"]["loc"], gmaps)
             if (address_res["success"]):
                 route["route_data"]["punto_inicio"]["address"] = address_res["address"]
-                municipio = address_res["municipio"]
+                route["route_data"]["punto_inicio"]["municipio"] = address_res["municipio"]
             else:
                 route["route_data"]["punto_inicio"]["address"] = False
+                route["route_data"]["punto_inicio"]["municipio"] = False
 
-        clima_res = get_clima(municipio, route_date)
+        clima_res = get_clima(route["route_data"]["punto_inicio"]["municipio"], route_date)
         # Date too far in the future error
         if (not clima_res["success"]):
             route["clima"] = False
@@ -108,7 +112,7 @@ def search():
     # Get acomodation in route
     for route in routes:
 
-        alojamientos_res = get_alojamientos(route["route_data"]["punto_inicio"], route_date)
+        alojamientos_res = get_alojamientos(route["route_data"]["punto_inicio"]["municipio"])
 
         if (not alojamientos_res["success"]):
             route["alojamientos"] = False

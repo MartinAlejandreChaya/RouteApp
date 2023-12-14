@@ -76,11 +76,27 @@ window.onload = () => {
             console.log("Sending GET request for data: ", req_data)
             waiting_for_response = true;
             loading_routes();
+            /*
+function(response) {
+    console.log(response.status); // Will show you the status
+    if (!response.ok) {
+        throw new Error("HTTP status " + response.status);
+    }
+    return response.json();
+            */
             fetch("/search_routes", {
                 "method": "POST",
                 "headers": {"Content-Type": "application/json"},
                 "body": JSON.stringify(req_data),
-            }).then( response => response.json() ).then(data => {
+            }).then( (response) => {
+                if (!response.ok) {
+                    return {
+                        "success": false,
+                        "error_msg": "Error interno del servidor"
+                    }
+                }
+                return response.json();
+            }).then(data => {
                 console.log("Response recieved", data);
                 waiting_for_response = false;
 
@@ -143,7 +159,7 @@ function loading_routes() {
     cont.innerHTML = "";
 
     const message = document.createElement("p");
-    message.innerHTML = "Loading ...";
+    message.innerHTML = "Loading ... (this may take a minute)";
 
     cont.appendChild(message);
 }

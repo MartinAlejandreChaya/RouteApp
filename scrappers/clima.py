@@ -22,11 +22,12 @@ def days_from_today(date):
     # Calcula la diferencia de días
     difference = date - today
 
+
     # Verifica si la diferencia es más de una semana
-    if difference.days > 7 or difference.days < 0:
+    if difference.days > 6 or difference.days < -1:
         return -1
     else:
-        return difference.days
+        return difference.days+1
 
 
 
@@ -41,10 +42,16 @@ def get_weather_data(day_data):
     sensacion=day_data.get('sensTermica')
     humedad= day_data.get('humedadRelativa')
 
+    for val in estadocielo:
+        if (val["descripcion"] != ""):
+            estadocielo = val["descripcion"]
+            break
+
+
     return {
         "Precipitacion": precipitacion[0].get('value'),
         "Probabilidad de nieve": cotanieve[0].get('value'),
-        "Estado del cielo":estadocielo[0].get('descripcion'),
+        "Estado del cielo":estadocielo,
         "Viento":viento[0].get('velocidad'),
         "Temperatura":{"Maxima":temperatura.get('maxima'),"Minima":temperatura.get('minima')},
         "Sensacion termica":{"Maxima":sensacion.get('maxima'),"Minima":sensacion.get('minima')},

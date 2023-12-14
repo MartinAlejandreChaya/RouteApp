@@ -5,6 +5,7 @@
 
   --bg-yellow: #9CCC65;
   --bg-light-gray: #F1F8E9;
+  --bg-gray: #bdbdbd;
 
   --slider-col: #9CCC65;
   --slider-thumb-col: #33691E;
@@ -53,4 +54,11 @@ input[type="range"]::-webkit-slider-thumb {
     background: var(--slider-thumb-col); /* Thumb color */
     border-radius: 50%;
     cursor: pointer;
+}
+
+.listaDesplegable {
+    padding: 0 0 0 5px;
+    max-width: 300px;
+    max-height: 100px;
+    overflow-y: auto;
 }

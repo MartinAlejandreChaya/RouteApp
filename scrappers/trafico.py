@@ -73,6 +73,8 @@ def get_traffic(from_loc, to_loc, gmaps, date=False):
             "distance": legs["distance"],
             "duration": legs["duration"],
             "duration_in_traffic": legs["duration_in_traffic"],
-            "steps": steps # {html_instructions, distance}
+            "steps": steps, # {html_instructions, distance}
+            "from": from_loc["address"],
+            "to": to_loc["address"]
         }
     }

@@ -6,7 +6,12 @@ import lxml
 import re
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
-MAX_ROUTES = 5
+MAX_ROUTES = 1
+
+# BeautifoulSoup configuration
+options = Options()
+options.add_argument("--headless=new")
+driver = webdriver.Edge(options=options)
 
 # PARAMS: The location around which we want to search for routes. Format (lat, long)
 # RETURNS: A list of routes
@@ -19,10 +24,6 @@ def get_routes(loc):
     URL="https://es.wikiloc.com/wikiloc/map.do?sw="+str(coords[0])+'%2C'+str(coords[1])+'&ne='+str(coords[2])+'%2C'+str(coords[3])
     print("Getting routes from", URL)
 
-    # BeautifoulSoup configuration
-    options = Options()
-    options.add_argument("--headless=new")
-    driver = webdriver.Edge(options=options)
     driver.get(URL)
     html = driver.page_source
     soup = BeautifulSoup(html, 'lxml')
