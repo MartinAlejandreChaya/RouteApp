@@ -159,7 +159,7 @@ function loading_routes() {
     cont.innerHTML = "";
 
     const message = document.createElement("p");
-    message.innerHTML = "Loading ...";
+    message.innerHTML = "Loading ... (this may take a minute)";
 
     cont.appendChild(message);
 }

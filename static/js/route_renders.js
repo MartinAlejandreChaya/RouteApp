@@ -55,8 +55,10 @@ function createRouteLi(route) {
     let alojamiento_str = ""
     if (route["alojamientos"] == false)
         alojamiento_str = route["alojamientos_error"]
-    else
-        alojamiento_str = route["alojamientos"]["min_price"]
+    else {
+        alojamiento_str = route["alojamientos"]["min_price"]["value"] +
+            " " + route["alojamientos"]["min_price"]["currency"]
+    }
     p6.innerHTML = "Alojamiento: <b>" + alojamiento_str + "</b>";
 
     lev_2.appendChild(p4);
@@ -101,6 +103,7 @@ function createRouteItem(route) {
 
     map.referrerPolicy = "no-referrer-when-downgrade";
     map.allowFullscreen = true;
+    map.loading = "lazy"
     map.frameBorder = "0";
     map.style.border = "0";
     map.style.borderRadius = "5px";
@@ -118,7 +121,7 @@ function createRouteItem(route) {
 
     left_div.appendChild(div_importante);
     
-    right_div.appendChild(createText("Cómo llegar:"));
+
     right_div.appendChild(map);
 
     title_div.appendChild(left_div);
@@ -126,40 +129,98 @@ function createRouteItem(route) {
 
     title_div.classList.add("route_header");
     right_div.classList.add("right_div");
-    
+    left_div.classList.add("left_div");
 
     const rest_div = document.createElement("div");
     rest_div.classList.add("route_rest")
     // Four sections
     const route_div = document.createElement("div");
     const traffic_div = document.createElement("div");
-    const climate_div = document.createElement("div");
+    const clima_div = document.createElement("div");
     const aloj_div = document.createElement("div");
 
     // Ruta
-    route_div.appendChild(createBigText("Información ruta"));
+    route_div.appendChild(createBigText("Ruta"));
     route_div.appendChild(createText("Estrellas <b>" + route["route_data"]["estrellas"] + "</b>"));
-    route_div.appendChild(createText("Desnivel: positivo <b>" + 
-        route["route_data"]["desnivel_positivo"]  + "</b>. negativo <b>" + 
-        route["route_data"]["desnivel_negativo"] + "</b>"));
     route_div.appendChild(createText("Link ruta <a target=\"_blank\" href=\"" + route["route_data"]["pagina_descarga"] + "\">Link</a>"));
+    const desnivelDiv = document.createElement("div");
+    desnivelDiv.appendChild(createText("Altitud máxima: <b>" + route["route_data"]["altitud_maxima"]))
+    desnivelDiv.appendChild(createText("Altitud máxima: <b>" + route["route_data"]["altitud_minima"]))
+    desnivelDiv.appendChild(createText("Desnivel positivo: <b>" + route["route_data"]["desnivel_positivo"]))
+    desnivelDiv.appendChild(createText("Desnivel negativo: <b>" + route["route_data"]["desnivel_negativo"]))
+    route_div.appendChild(desnivelDiv);
 
     // Clima
-    climate_div.appendChild(createBigText("Información clima"));
-    climate_div.appendChild(createText("Temperatura: mínima <b>" + 
-        route["clima"]["Temperatura"]["Minima"] + "</b> máxima <b>" +
+    clima_div.appendChild(createBigText("Clima"));
+    clima_div.appendChild(createText("Temperatura: <b>" +
+        route["clima"]["Temperatura"]["Minima"] + "</b> - <b>" +
         route["clima"]["Temperatura"]["Maxima"] + "</b>"));
-    climate_div.appendChild(createText("Precipitación: <b>" + route["clima"]["Precipitacion"] + "%"));
+        clima_div.appendChild(createText("Sensación térmica: <b>" +
+        route["clima"]["Sensacion termica"]["Minima"] + "</b> - <b>" +
+        route["clima"]["Sensacion termica"]["Maxima"] + "</b>"));
+    clima_div.appendChild(createText("Precipitación: <b>" + route["clima"]["Precipitacion"] + "%"));
+    clima_div.appendChild(createText("Humedad relativa: " +
+        route["clima"]["Humedad relativa"]["Minima"] + " - " + route["clima"]["Humedad relativa"]["Maxima"]))
+    if (route["clima"]["Probabilidad de nieve"] == "") {
+        clima_div.appendChild(createText("Sin probabilidad de nieve"))
+    }
+    else {
+        clima_div.appendChild(createText("Probabilidad de nieve: <b>" +
+            + route["clima"]["Probabilidad de nieve"] + "</b>. Se recomienda ropa de abrigo."))
+    }
+    clima_div.appendChild(createText("Velocidad del viento: " + route["clima"]["Viento"]));
+    clima_div.appendChild(createText("Radiación UV: " + route["clima"]["Radiacion UV maxima"]))
 
     // Tráfico
-    traffic_div.appendChild(createBigText("Información tráfico"));
+    traffic_div.appendChild(createBigText("Tráfico"));
+    traffic_div.appendChild(createText("Distancia <b>" + route["traffic"]["distance"]["text"] + "</b>"))
+    traffic_div.appendChild(createText("Duración (sin tráfico) <b>" + route["traffic"]["duration"]["text"] + "</b>"))
+    traffic_div.appendChild(createText("Duración (en tráfico) <b>" + route["traffic"]["duration_in_traffic"]["text"] + "</b>"))
+    traffic_div.appendChild(createText("Desde " + route["traffic"]["from"] + "<br>Hasta " + route["traffic"]["to"]))
+    const desplegable = document.createElement("ul");
+    route["traffic"]["steps"].forEach((step) => {
+        // Append step to desplegable
+        desplegable.appendChild(createText(
+            "<span class=\"traffic_distance\">" + step["distance"]["text"] + "</span> - " + step["html_instructions"]
+        ))
+    })
+    desplegable.classList.add("listaDesplegable")
+    traffic_div.appendChild(desplegable);
 
     // Alojamiento
-    aloj_div.appendChild(createBigText("Información alojamiento"));
+    aloj_div.appendChild(createBigText("Alojamiento"));
+    aloj_div.appendChild(createText("Mejor precio: <b>" + route["alojamientos"]["min_price"]["value"] + "</b>"))
+    aloj_desplegable = document.createElement("ul");
+    aloj_desplegable.classList.add("listaDesplegable");
+    route["alojamientos"]["list"].forEach((aloj) => {
+        const aloj_item = document.createElement("div");
+
+        const aloj_title = document.createElement("div");
+        aloj_title.classList.add("aloj_title_div")
+        const aloj_imp = document.createElement("div");
+        aloj_imp.appendChild(createText("<b>"+aloj["hotel_name"] + "</b>"))
+        aloj_imp.appendChild(createText("Precio: <b>" + aloj["price_breakdown"]["all_inclusive_price"]
+            + aloj["price_breakdown"]["currency"] + "</b>"))
+        aloj_imp.appendChild(createText("Reseñas: <b>" + aloj["review_score"] + "</b>"))
+        const hotel_img = document.createElement("img");
+        hotel_img.src = aloj["main_photo_url"];
+        hotel_img.classList.add("aloj_img");
+        aloj_title.appendChild(aloj_imp);
+        aloj_title.appendChild(hotel_img);
+        aloj_item.appendChild(aloj_title)
+
+        aloj_item.appendChild(createText("Booking <a href=\"" + aloj["url"] + "\" target=\"_blank\">link</a>"))
+        aloj_item.appendChild(createText("Check-in / out: " +
+            aloj["checkin"]["from"] + " - " + aloj["checkin"]["until"] + " / " +
+            aloj["checkout"]["from"] + " - " + aloj["checkout"]["until"]))
+        aloj_item.appendChild(document.createElement("hr"))
+        aloj_desplegable.appendChild(aloj_item);
+    })
+    aloj_div.appendChild(aloj_desplegable);
 
     rest_div.appendChild(route_div);
+    rest_div.appendChild(clima_div);
     rest_div.appendChild(traffic_div);
-    rest_div.appendChild(climate_div);
     rest_div.appendChild(aloj_div);
 
     cont.appendChild(title_div);

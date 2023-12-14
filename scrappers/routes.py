@@ -6,7 +6,7 @@ import lxml
 import re
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
-MAX_ROUTES = 5
+MAX_ROUTES = 1
 
 # BeautifoulSoup configuration
 options = Options()
