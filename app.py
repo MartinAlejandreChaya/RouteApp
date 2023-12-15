@@ -112,7 +112,7 @@ def search():
     # Get acomodation in route
     for route in routes:
 
-        alojamientos_res = get_alojamientos(route["route_data"]["punto_inicio"]["municipio"])
+        alojamientos_res = get_alojamientos(search_title)
 
         if (not alojamientos_res["success"]):
             route["alojamientos"] = False
