@@ -26,7 +26,7 @@ def search():
 
     # Place
     search_title = params["search_title"]
-    gmaps = googlemaps.Client(key='AIzaSyBxkPLTw1AgCBl6wkOP9wu0_xaumdy7Kcc')
+    gmaps = googlemaps.Client(key='SECRET_KEY')
     search_loc = get_search_title_location(search_title, gmaps)
     if (not search_loc["exists"]):
         return {
